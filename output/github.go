@@ -36,11 +36,12 @@ func (t *GitHub) Output(checkResults []CheckResult) error {
 		fmt.Fprintf(t.writer, "::group::Testing '%v' against %v policies in namespace '%v'\n", result.FileName, totalPolicies, result.Namespace)
 		for _, failure := range result.Failures {
 			fmt.Fprintf(t.writer, "::error file=%v::%v\n", result.FileName, failure.Message)
+			fmt.Fprintf(t.writer, "::set-output name=overused::%v", failure.Message)
 		}
 
 		for _, warning := range result.Warnings {
 			fmt.Fprintf(t.writer, "::warning file=%v::%v\n", result.FileName, warning.Message)
-            fmt.Fprintf(t.writer, "::set-output name=exceeded::%v", warning.Message)
+			fmt.Fprintf(t.writer, "::set-output name=exceeded::%v", warning.Message)
 		}
 
 		for _, exception := range result.Exceptions {
