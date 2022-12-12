@@ -40,6 +40,7 @@ func (t *GitHub) Output(checkResults []CheckResult) error {
 
 		for _, warning := range result.Warnings {
 			fmt.Fprintf(t.writer, "::warning file=%v::%v\n", result.FileName, warning.Message)
+            fmt.Fprintf(t.writer, "::set-output name=exceeded::%v", warning.Message)
 		}
 
 		for _, exception := range result.Exceptions {
